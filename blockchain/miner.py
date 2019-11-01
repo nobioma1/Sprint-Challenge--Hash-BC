@@ -22,7 +22,6 @@ def proof_of_work(last_proof):
     """
 
     start = timer()
-    print()
     print("Searching for next proof")
     last_proof_hash = hashlib.sha256(f"{last_proof}".encode()).hexdigest()
     proof = 0
@@ -41,7 +40,6 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456888...
     """
     proof_hash = hashlib.sha256(f"{proof}".encode()).hexdigest()
-    print(f"{last_hash[-6:]}", f"{proof_hash[:6]}")
     return last_hash[-6:] == proof_hash[:6]
 
 
@@ -68,7 +66,6 @@ if __name__ == '__main__':
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof")
         data = r.json()
-        print(data)
         new_proof = proof_of_work(data.get('proof'))
 
         post_data = {"proof": new_proof,
